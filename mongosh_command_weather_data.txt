@@ -1,0 +1,252 @@
+
+HP1@Nagesh MINGW64 ~
+$ mongosh
+Current Mongosh Log ID: 6690ca7b6fd9228cfce8e3e7
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.11
+Using MongoDB:          7.0.12
+Using Mongosh:          2.2.11
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-07-12T10:45:20.469+05:30: Access control is not enabled for the database. Read andwrite access to data and configuration is unrestricted
+------
+
+test> show db
+MongoshInvalidInputError: [COMMON-10001] 'db' is not a valid argument for "show".
+test> show dbs
+admin   40.00 KiB
+config  72.00 KiB
+local   72.00 KiB
+new_db  53.80 MiB
+test> use weather_db
+switched to db weather_db
+weather_db> db.createCollection("weather_data")
+{ ok: 1 }
+weather_db> show dbs
+admin        40.00 KiB
+config      108.00 KiB
+local        72.00 KiB
+new_db       53.80 MiB
+weather_db    8.00 KiB
+weather_db> db.weather_data.find().limit(1)
+[
+  {
+    _id: ObjectId('5553a998e4b02cf7151190b8'),
+    st: 'x+47600-047900',
+    ts: ISODate('1984-03-05T13:00:00.000Z'),
+    position: { type: 'Point', coordinates: [ -47.9, 47.6 ] },
+    elevation: 9999,
+    callLetters: 'VCSZ',
+    qualityControlProcess: 'V020',
+    dataSource: '4',
+    type: 'FM-13',
+    airTemperature: { value: -3.1, quality: '1' },
+    dewPoint: { value: 999.9, quality: '9' },
+    pressure: { value: 1015.3, quality: '1' },
+    wind: {
+      direction: { angle: 999, quality: '9' },
+      type: '9',
+      speed: { rate: 999.9, quality: '9' }
+    },
+    visibility: {
+      distance: { value: 999999, quality: '9' },
+      variability: { value: 'N', quality: '9' }
+    },
+    skyCondition: {
+      ceilingHeight: { value: 99999, quality: '9', determination: '9' },
+      cavok: 'N'
+    },
+    sections: [ 'AG1' ],
+    precipitationEstimatedObservation: { discrepancy: '2', estimatedWaterDepth: 999 }
+  }
+]
+weather_db> db.weather_data.updateOne({_id: Obje _id: ObjectId('5553a998e4b02cf7151190b8')}, {$set: { dataSource: '5'}})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:37)
+
+> 1 | db.weather_data.updateOne({_id: Obje _id: ObjectId('5553a998e4b02cf7151190b8')}, {$set: { dataSource: '5'}})
+    |                                      ^
+  2 |
+
+weather_db> db.weather_data.updateOne({_id: ObjectId('5553a998e4b02cf7151190b8')}, {$set: { dataSource: '5'}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+weather_db> db.weather_data.find().limit(1)
+[
+  {
+    _id: ObjectId('5553a998e4b02cf7151190b8'),
+    st: 'x+47600-047900',
+    ts: ISODate('1984-03-05T13:00:00.000Z'),
+    position: { type: 'Point', coordinates: [ -47.9, 47.6 ] },
+    elevation: 9999,
+    callLetters: 'VCSZ',
+    qualityControlProcess: 'V020',
+    dataSource: '5',
+    type: 'FM-13',
+    airTemperature: { value: -3.1, quality: '1' },
+    dewPoint: { value: 999.9, quality: '9' },
+    pressure: { value: 1015.3, quality: '1' },
+    wind: {
+      direction: { angle: 999, quality: '9' },
+      type: '9',
+      speed: { rate: 999.9, quality: '9' }
+    },
+    visibility: {
+      distance: { value: 999999, quality: '9' },
+      variability: { value: 'N', quality: '9' }
+    },
+    skyCondition: {
+      ceilingHeight: { value: 99999, quality: '9', determination: '9' },
+      cavok: 'N'
+    },
+    sections: [ 'AG1' ],
+    precipitationEstimatedObservation: { discrepancy: '2', estimatedWaterDepth: 999 }
+  }
+]
+weather_db> db.weather_data.updateOne({_id: ObjectId('5553a998e4b02cf7151190b8')}, {$inc: { elevation: 1}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+weather_db> db.weather_data.find().limit(1)
+[
+  {
+    _id: ObjectId('5553a998e4b02cf7151190b8'),
+    st: 'x+47600-047900',
+    ts: ISODate('1984-03-05T13:00:00.000Z'),
+    position: { type: 'Point', coordinates: [ -47.9, 47.6 ] },
+    elevation: 10000,
+    callLetters: 'VCSZ',
+    qualityControlProcess: 'V020',
+    dataSource: '5',
+    type: 'FM-13',
+    airTemperature: { value: -3.1, quality: '1' },
+    dewPoint: { value: 999.9, quality: '9' },
+    pressure: { value: 1015.3, quality: '1' },
+    wind: {
+      direction: { angle: 999, quality: '9' },
+      type: '9',
+      speed: { rate: 999.9, quality: '9' }
+    },
+    visibility: {
+      distance: { value: 999999, quality: '9' },
+      variability: { value: 'N', quality: '9' }
+    },
+    skyCondition: {
+      ceilingHeight: { value: 99999, quality: '9', determination: '9' },
+      cavok: 'N'
+    },
+    sections: [ 'AG1' ],
+    precipitationEstimatedObservation: { discrepancy: '2', estimatedWaterDepth: 999 }
+  }
+]
+weather_db> db.weather_data.updateOne({_id: ObjectId('5553a998e4b02cf7151190b8')}, {$inc: { elevation: -1}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+weather_db> db.weather_data.find().limit(1)
+[
+  {
+    _id: ObjectId('5553a998e4b02cf7151190b8'),
+    st: 'x+47600-047900',
+    ts: ISODate('1984-03-05T13:00:00.000Z'),
+    position: { type: 'Point', coordinates: [ -47.9, 47.6 ] },
+    elevation: 9999,
+    callLetters: 'VCSZ',
+    qualityControlProcess: 'V020',
+    dataSource: '5',
+    type: 'FM-13',
+    airTemperature: { value: -3.1, quality: '1' },
+    dewPoint: { value: 999.9, quality: '9' },
+    pressure: { value: 1015.3, quality: '1' },
+    wind: {
+      direction: { angle: 999, quality: '9' },
+      type: '9',
+      speed: { rate: 999.9, quality: '9' }
+    },
+    visibility: {
+      distance: { value: 999999, quality: '9' },
+      variability: { value: 'N', quality: '9' }
+    },
+    skyCondition: {
+      ceilingHeight: { value: 99999, quality: '9', determination: '9' },
+      cavok: 'N'
+    },
+    sections: [ 'AG1' ],
+    precipitationEstimatedObservation: { discrepancy: '2', estimatedWaterDepth: 999 }
+  }
+]
+weather_db> db.weather_data.find({ callLetters: 'VCSZ'}).count()
+12
+weather_db> db.weather_data.updateMany({callLetters: 'VCSZ'}, {$set: {elevation: 10000}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 12,
+  modifiedCount: 12,
+  upsertedCount: 0
+}
+weather_db> db.weather_data.find({ callLetters: {$ne: 'VCSZ'}}).count()
+9988
+weather_db> db.weather_data.find({ callLetters: 'VCSZ'}).count()
+12
+weather_db> db.weather_data.find().count()
+10000
+weather_db> db.weather_data.find({elevation: {$lt: 9998}}).count()
+0
+weather_db> db.weather_data.find({elevation: {$gt: 9998}}).count()
+10000
+weather_db> db.weather_data.find({elevation: {$gte: 9999}}).count()
+10000
+weather_db> db.weather_data.find({$and: [{elevation: {$gt: 9999}}, {elevation: {$lt: 10000}}}]).count()
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:80)
+
+> 1 | db.weather_data.find({$and: [{elevation: {$gt: 9999}}, {elevation: {$lt: 10000}}}]).count()
+    |                                                                                 ^
+  2 |
+
+weather_db> db.weather_data.find({$and: [{elevation: {$gt: 9999}}, {elevation: {$lt: 10000}}]}).count()
+0
+weather_db> db.weather_data.distinct("type")
+[ 'FM-13', 'SAO' ]
+weather_db> db.weather_data.distinct("callLeters")
+[]
+weather_db> db.weather_data.distinct("callLetters")
+[
+  '0BVZ', '0JSV', '2100', '3DRO', '3DRV', '3EBA', '3EDA',
+  '3EEJ', '3EEK', '3EFI', '3EFQ', '3EGC', '3EGU', '3EHC',
+  '3EHG', '3EHH', '3EIZ', '3EJF', '3EKJ', '3ELE', '3ENZ',
+  '3EOS', '3EOU', '3EPA', '3EQN', '3ERJ', '3ERZ', '3ETZ',
+  '3EWQ', '3EXD', '3EYN', '3EZL', '3FAR', '3FBD', '3FDL',
+  '3FEV', '3FGE', '3FJR', '3FJV', '3FKA', '3FMV', '3FQU',
+  '3FTJ', '3FXH', '3FXI', '3FXS', '3FYO', '3HZL', '4602',
+  '4PKY', '4XIC', '4XII', '4XIL', '4XLU', '4XLZ', '4XMX',
+  '5LFX', '5LJT', '5LLP', '5LOT', '5LOZ', '5LTW', '5LUB',
+  '5LWE', '5LWG', '5LWQ', '5MCB', '5MCN', '5MGC', '5MQI',
+  '5MTS', '5MZH', '5PVN', '6ZAM', '6ZAS', '6ZBM', '6ZCM',
+  '6ZDN', '6ZFM', '6ZHX', '6ZJP', '6ZLH', '6ZRT', '6ZUU',
+  '7FFC', '7JBJ', '7JFY', '7JKS', '7JKY', '7JOB', '7JPI',
+  '7JQI', '7JQX', '7JRZ', '7JSO', '7JSP', '7JTJ', '7JTN',
+  '7JUI', '7JVM',
+  ... 2549 more items
+]
+weather_db> db.weather_data.find({type: 'SAO'}).count()
+6
+weather_db> db.weather_data.find({type: 'FM-13'}).count()
+9994
+weather_db>
